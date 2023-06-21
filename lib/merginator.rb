@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
-require_relative "merginator/version"
+require_relative 'merginator/version'
+require_relative 'merginator/mergifier/pattern_merge'
 
+# Contains top-level namespace code
 module Merginator
   class Error < StandardError; end
-  # Your code goes here...
+
+  def self.pattern_merge(...)
+    Mergifier::PatternMerge.new(...)
+  end
 end

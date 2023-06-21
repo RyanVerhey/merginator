@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-require_relative "lib/merginator/version"
+require_relative 'lib/merginator/version'
 
 Gem::Specification.new do |spec|
-  spec.name = "merginator"
+  spec.name = 'merginator'
   spec.version = Merginator::VERSION
-  spec.authors = ["Ryan Verhey"]
-  spec.email = ["ryan@ryanverhey.com"]
+  spec.authors = ['Ryan Verhey']
+  spec.email = ['ryan@ryanverhey.com']
 
-  spec.summary = "Merging collections based on a pattern."
-  spec.description = "Merge 2 or more collections based on a repeating pattern."
-  spec.homepage = "https://github.com/RyanVerhey/merginator"
-  spec.license = "MIT"
-  spec.required_ruby_version = ">= 2.6.0"
+  spec.summary = 'Merging collections based on a pattern.'
+  spec.description = 'Merge 2 or more collections based on a repeating pattern.'
+  spec.homepage = 'https://github.com/RyanVerhey/merginator'
+  spec.license = 'MIT'
+  spec.required_ruby_version = '>= 2.7.8'
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
+  spec.metadata['allowed_push_host'] = "TODO: Set to your gem server 'https://example.com'"
 
-  spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/RyanVerhey/merginator"
-  spec.metadata["changelog_uri"] = "https://github.com/RyanVerhey/merginator/blob/main/CHANGELOG.md"
+  spec.metadata['homepage_uri'] = spec.homepage
+  spec.metadata['source_code_uri'] = 'https://github.com/RyanVerhey/merginator'
+  spec.metadata['changelog_uri'] = 'https://github.com/RyanVerhey/merginator/blob/main/CHANGELOG.md'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -27,13 +27,14 @@ Gem::Specification.new do |spec|
       (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|circleci)|appveyor)})
     end
   end
-  spec.bindir = "exe"
+  spec.bindir = 'exe'
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end

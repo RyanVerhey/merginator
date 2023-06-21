@@ -1,9 +1,14 @@
+require:
+  - rubocop-rake
+  - rubocop-minitest
+
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7.8
+  NewCops: enable
 
 Style/StringLiterals:
   Enabled: true
-  EnforcedStyle: double_quotes
+  EnforcedStyle: single_quotes
 
 Style/StringLiteralsInInterpolation:
   Enabled: true
@@ -11,3 +16,31 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 120
+
+Metrics/BlockLength:
+  CountAsOne:
+    - array
+    - heredoc
+    - method_call
+    - hash
+
+Metrics/ClassLength:
+  CountAsOne:
+    - array
+    - heredoc
+    - method_call
+    - hash
+
+Metrics/MethodLength:
+  CountAsOne:
+    - array
+    - heredoc
+    - method_call
+    - hash
+
+Metrics/ModuleLength:
+  CountAsOne:
+    - array
+    - heredoc
+    - method_call
+    - hash
