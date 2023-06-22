@@ -12,11 +12,10 @@ module Merginator
 
       def initialize(*pattern, total: nil)
         @pattern = pattern
-        raise ArgumentError, 'there must be more than one collection in the pattern' if @pattern.count <= 1
-        raise ArgumentError, 'pattern must be all integers' unless @pattern.all? { |n| n.is_a? Integer }
+        validate_pattern
 
         @total = total
-        raise ArgumentError, 'total must be at least 1' if @total && @total < 1
+        validate_total
 
         # Counts are helpful when you're looking for a particular length end result
         # and querying a database or index. If you're not, they're not needed.
@@ -24,7 +23,7 @@ module Merginator
       end
 
       def merge(*collections)
-        raise ArgumentError, 'number of collections must match pattern' unless @pattern.count == collections.count
+        validate_merge_collections(collections)
 
         total = @total || collections.sum(&:count)
 
@@ -54,6 +53,29 @@ module Merginator
         end
 
         counts
+      end
+
+      def validate_pattern
+        raise ArgumentError, 'there must be more than one collection in the pattern' if @pattern.count <= 1
+        raise ArgumentError, 'pattern must be all integers' unless @pattern.all? { |n| n.is_a? Integer }
+      end
+
+      def validate_total
+        raise ArgumentError, 'total must be at least 1' if @total && @total < 1
+      end
+
+      def validate_merge_collections(collections)
+        unless @pattern.count == collections.count
+          message = 'number of collections must match pattern; '
+          message += "expected #{@pattern.count} collections, actual: #{collections.count}"
+          raise ArgumentError, message
+        end
+
+        if @total && collections.flatten.count < @total
+          message = 'total number of elements in collections must be >= provided total; '
+          message += "expected #{@total} elements, actual: #{collections.flatten.count}"
+          raise ArgumentError, message
+        end
       end
     end
   end

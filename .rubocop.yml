@@ -17,6 +17,9 @@ Style/StringLiteralsInInterpolation:
 Layout/LineLength:
   Max: 120
 
+Minitest/EmptyLineBeforeAssertionMethods:
+  Enabled: false
+
 Metrics/BlockLength:
   CountAsOne:
     - array
