@@ -1,0 +1,15 @@
+# See the writing guide of rbs: https://github.com/ruby/rbs#guides
+class Merginator::PatternMerge
+  @pattern: Array[Integer]
+  @total: Integer
+  @counts: Array[Integer]?
+
+  def merge: (*Enumerable[untyped]) -> Array[untyped]
+
+  private
+
+  def generate_pattern_counts: (Integer) -> Array[Integer]
+  def validate_pattern: () -> void
+  def validate_total: () -> void
+  def validate_merge_collections: (*Enumerable[untyped]) -> void
+end
