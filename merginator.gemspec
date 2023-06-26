@@ -14,8 +14,6 @@ Gem::Specification.new do |spec|
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 2.7.8'
 
-  spec.metadata['allowed_push_host'] = "TODO: Set to your gem server 'https://example.com'"
-
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/RyanVerhey/merginator'
   spec.metadata['changelog_uri'] = 'https://github.com/RyanVerhey/merginator/blob/main/CHANGELOG.md'
