@@ -12,3 +12,4 @@ gem 'minitest'
 gem 'rubocop'
 gem 'rubocop-minitest', require: false
 gem 'rubocop-rake', require: false
+gem 'rbs', require: false

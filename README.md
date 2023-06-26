@@ -1,24 +1,40 @@
 # Merginator
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/merginator`. To experiment with that code, run `bin/console` for an interactive prompt.
+Easily merge collections with a simple API!
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ bundle add Merginator
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ gem install Merginator
 
 ## Usage
 
-TODO: Write usage instructions here
+### Pattern Merge
+
+Merge collections based on a defined pattern. Adding an optional total limits the number returned values.
+```ruby
+arrays = [
+  Array.new(10, 'One'),
+  Array.new(10, 'Two'),
+  Array.new(10, 'Three'),
+]
+mergifier = Merginator.pattern_merge(4, 2, 1, total: 10)
+mergifier.merge(arrays[0], arrays[1], arrays[2])
+# => ['One', 'One', 'One', 'One', 'Two', 'Two', 'Three', 'One', 'One', 'One']
+```
+
+Need to merge the results of multiple queries, in Rails for example? Need to paginate your results, but you don't want to instantiate more results than you need? Merginator will tell you how many records you need to query:
+```ruby
+mergifier = Merginator.pattern_merge(4, 2, 1, total: 10)
+counts = mergifier.counts # => [7, 2, 1]
+mergifier.merge(Post.limit(counts[0]), Comment.limit(counts[1]), User.limit(counts[2]))
+# => [#<Post>, #<Post>, #<Post>, #<Post>, #<Comment>, #<Comment>, #<User>, #<Post>, #<Post>, #<Post>]
+```
 
 ## Development
 
@@ -28,7 +44,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/merginator. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/merginator/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/RyanVerhey/merginator. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/RyanVerhey/merginator/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -36,4 +52,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Merginator project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/merginator/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the Merginator project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/RyanVerhey/merginator/blob/main/CODE_OF_CONDUCT.md).
