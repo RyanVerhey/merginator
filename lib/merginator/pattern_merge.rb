@@ -21,17 +21,18 @@ module Merginator
 
       # Counts are helpful when you're looking for a particular length end result
       # and querying a database or index. If you're not, they're not needed.
-      @counts = generate_pattern_counts(@total) if @total
+      @counts = generate_pattern_counts(@total)
     end
 
     def merge(*collections, wrapper: @wrapper, ignore_total: false)
       validate_merge_collections(collections)
       validate_wrapper wrapper
 
-      total = ignore_total || !@total ? collections.sum(&:size) : @total
+      total_to_use = @total
+      total_to_use = collections.sum(&:size) if !total || ignore_total
 
       slices_for_collections = slice_collections(collections)
-      merge_collections_into_wrapper(slices_for_collections, wrapper: wrapper, total: total)
+      merge_collections_into_wrapper(slices_for_collections, wrapper: wrapper, total: total_to_use)
 
       wrapper
     end
@@ -44,6 +45,8 @@ module Merginator
     # Merginator::Mergifier::PatternMerge.new(4, 2, 1, total: 25)
     # => [16, 6, 3]
     def generate_pattern_counts(total)
+      return unless total
+
       full_repetitions = total / @pattern.sum
       counts = @pattern.map { |num| num * full_repetitions }
 
@@ -64,7 +67,7 @@ module Merginator
     end
 
     def merge_collections_into_wrapper(slices_for_collections, wrapper:, total:)
-      slices_for_collections.map(&:size).max.times.each_with_object(wrapper) do |index, wrapper_obj|
+      slices_for_collections.map(&:size).max.to_i.times.each_with_object(wrapper) do |index, wrapper_obj|
         wrapper_obj.concat slices_for_collections.map { |slices| slices[index] || [] }.flatten
         break(wrapper_obj) if wrapper_obj.size >= total
       end
@@ -78,7 +81,9 @@ module Merginator
     end
 
     def validate_total
-      raise ArgumentError, 'total must be at least 1' if @total && @total < 1
+      return if (@total || 1).positive?
+
+      raise ArgumentError, 'total must be at least 1'
     end
 
     def validate_merge_collections(collections)
@@ -88,7 +93,8 @@ module Merginator
         raise ArgumentError, message
       end
 
-      return unless @total && collections.flatten.count < @total
+      total_to_use = @total || collections.flatten.count
+      return if collections.flatten.count >= total_to_use
 
       message = 'total number of elements in collections must be >= provided total; '
       message += "expected #{@total} elements, actual: #{collections.flatten.count}"
@@ -96,9 +102,9 @@ module Merginator
     end
 
     def validate_wrapper(wrapper = @wrapper)
-      return if wrapper.is_a?(Enumerable)
+      return if wrapper.is_a?(Array)
 
-      raise ArgumentError, 'wrapper must be enumerable'
+      raise ArgumentError, 'wrapper must be like an array'
     end
   end
 end
