@@ -6,11 +6,11 @@ Easily merge collections with a simple API!
 
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add Merginator
+    $ bundle add merginator
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install Merginator
+    $ gem install merginator
 
 ## Usage
 
