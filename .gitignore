@@ -7,5 +7,4 @@
 /spec/reports/
 /tmp/
 /*.gem
-/.rubocop_todo.*
 /.gem_rbs_collection/
