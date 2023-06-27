@@ -16,4 +16,5 @@ end
 group :test do
   gem 'minitest'
   gem 'rubocop-minitest', require: false
+  gem 'simplecov', require: false
 end
