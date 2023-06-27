@@ -1,4 +1,4 @@
-# Merginator
+# Merginator [![Gem Version](https://badge.fury.io/rb/merginator.svg)](https://badge.fury.io/rb/merginator) ![Build Status](https://github.com/RyanVerhey/merginator/actions/workflows/main.yml/badge.svg?branch=main)
 
 Easily merge collections with a simple API!
 
