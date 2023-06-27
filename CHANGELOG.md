@@ -1,3 +1,7 @@
+## [0.2.1] - 2023-06-27
+
+- Configuration change version bump
+
 ## [0.2.0] - 2023-06-27
 
 - Updating configuration
