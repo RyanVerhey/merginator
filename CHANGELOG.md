@@ -1,3 +1,9 @@
+## [0.2.0] - TBD
+
+- Updating configuration
+- Adding Steep type checking
+- Improving code based on usage
+
 ## [0.1.1] - 2023-06-26
 
 - Updating README
