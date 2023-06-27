@@ -29,4 +29,4 @@ namespace :test do
   end
 end
 
-task default: %i[test:all]
+task default: %i[test rubocop test:steep:check]
