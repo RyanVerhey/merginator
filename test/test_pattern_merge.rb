@@ -50,25 +50,16 @@ class TestPatternMerge < Minitest::Test
 
   class Counts < TestPatternMerge
     def test_generates_pattern_counts_properly
-      mergifier = Merginator::PatternMerge.new(5, 2, 3, total: 21)
-      expected = [11, 4, 6]
+      tests = [
+        [[11, 4, 6], Merginator::PatternMerge.new(5, 2, 3, total: 21)],
+        [[6, 20, 4], Merginator::PatternMerge.new(3, 10, 3, total: 30)],
+        [[5, 10, 15], Merginator::PatternMerge.new(1, 2, 3, total: 30)],
+        [[200, 70, 30], Merginator::PatternMerge.new(50, 20, 10, total: 300)]
+      ]
 
-      assert_equal expected, mergifier.counts
-
-      mergifier = Merginator::PatternMerge.new(3, 10, 3, total: 30)
-      expected = [6, 20, 4]
-
-      assert_equal expected, mergifier.counts
-
-      mergifier = Merginator::PatternMerge.new(1, 2, 3, total: 30)
-      expected = [5, 10, 15]
-
-      assert_equal expected, mergifier.counts
-
-      mergifier = Merginator::PatternMerge.new(50, 20, 10, total: 300)
-      expected = [200, 70, 30]
-
-      assert_equal expected, mergifier.counts
+      tests.each do |expected, mergifier|
+        assert_equal expected, mergifier.counts
+      end
     end
   end
 
@@ -99,7 +90,8 @@ class TestPatternMerge < Minitest::Test
         @mergifier.merge(*collections)
       end
 
-      expected_message = 'total number of elements in collections must be >= provided total; expected 21 elements, actual: 3'
+      expected_message = 'total number of elements in collections must be >= '
+      expected_message += 'provided total; expected 21 elements, actual: 3'
       assert_equal expected_message, error.message
     end
 
@@ -154,7 +146,8 @@ class TestPatternMerge < Minitest::Test
         Array.new(20, 'Two'),
         Array.new(20, 'Three')
       ]
-      expected = %w[One One One One One Two Two Three Three Three Two Two Three Three Three Two Two Three Three Three Two]
+      expected = %w[One One One One One Two Two Three Three Three Two Two Three]
+      expected += %w[Three Three Two Two Three Three Three Two]
 
       assert_equal expected, @mergifier.merge(*collections)
     end

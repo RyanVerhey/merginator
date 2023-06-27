@@ -7,33 +7,33 @@ module Merginator
   # first, 2 from the second, and one from the third. Also passing in the total,
   # or, an amount for a page
   class PatternMerge
-    attr_reader :pattern, :total, :counts
+    attr_reader :pattern, :total, :counts, :wrapper
 
-    def initialize(*pattern, total: nil)
+    def initialize(*pattern, total: nil, wrapper: [])
       @pattern = pattern
       validate_pattern
 
       @total = total
       validate_total
 
+      @wrapper = wrapper
+      validate_wrapper
+
       # Counts are helpful when you're looking for a particular length end result
       # and querying a database or index. If you're not, they're not needed.
       @counts = generate_pattern_counts(@total) if @total
     end
 
-    def merge(*collections)
+    def merge(*collections, wrapper: @wrapper, ignore_total: false)
       validate_merge_collections(collections)
+      validate_wrapper wrapper
 
-      total = @total || collections.sum(&:size)
+      total = ignore_total || !@total ? collections.sum(&:size) : @total
 
-      slices_for_collections = collections.map.with_index do |collection, index|
-        collection.each_slice(@pattern[index]).to_a
-      end
+      slices_for_collections = slice_collections(collections)
+      merge_collections_into_wrapper(slices_for_collections, wrapper: wrapper, total: total)
 
-      slices_for_collections.map(&:size).max.times.each_with_object([]) do |index, arr|
-        arr << slices_for_collections.map { |slices| slices[index] || [] }.flatten
-        break(arr) if arr.flatten.size >= total
-      end.flatten.take(total)
+      wrapper
     end
 
     private
@@ -57,6 +57,21 @@ module Merginator
       counts
     end
 
+    def slice_collections(collections)
+      collections.map.with_index do |collection, index|
+        collection.each_slice(@pattern[index]).to_a
+      end
+    end
+
+    def merge_collections_into_wrapper(slices_for_collections, wrapper:, total:)
+      slices_for_collections.map(&:size).max.times.each_with_object(wrapper) do |index, wrapper_obj|
+        wrapper_obj.concat slices_for_collections.map { |slices| slices[index] || [] }.flatten
+        break(wrapper_obj) if wrapper_obj.size >= total
+      end
+
+      wrapper.replace wrapper.take(total)
+    end
+
     def validate_pattern
       raise ArgumentError, 'there must be more than one collection in the pattern' if @pattern.count <= 1
       raise ArgumentError, 'pattern must be all integers' unless @pattern.all? { |n| n.is_a? Integer }
@@ -73,11 +88,17 @@ module Merginator
         raise ArgumentError, message
       end
 
-      if @total && collections.flatten.count < @total
-        message = 'total number of elements in collections must be >= provided total; '
-        message += "expected #{@total} elements, actual: #{collections.flatten.count}"
-        raise ArgumentError, message
-      end
+      return unless @total && collections.flatten.count < @total
+
+      message = 'total number of elements in collections must be >= provided total; '
+      message += "expected #{@total} elements, actual: #{collections.flatten.count}"
+      raise ArgumentError, message
+    end
+
+    def validate_wrapper(wrapper = @wrapper)
+      return if wrapper.is_a?(Enumerable)
+
+      raise ArgumentError, 'wrapper must be enumerable'
     end
   end
 end
