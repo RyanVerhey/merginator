@@ -2,5 +2,5 @@
 module Merginator
   VERSION: String
 
-  def self.pattern_merge: (*untyped) -> Merginator::PatternMerge
+  def self.pattern_merge: (*Integer, total: Integer?, wrapper: Enumerable[untyped]) -> Merginator::PatternMerge
 end

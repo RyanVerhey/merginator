@@ -1,15 +1,23 @@
 # See the writing guide of rbs: https://github.com/ruby/rbs#guides
-class Merginator::PatternMerge
-  @pattern: Array[Integer]
-  @total: Integer
-  @counts: Array[Integer]?
+type wrapper = Enumerable[untyped]
+type collections = Array[Enumerable[untyped]]
 
+class Merginator::PatternMerge
+  attr_reader pattern: Array[Integer]
+  attr_reader total: Integer?
+  attr_reader counts: Array[Integer]?
+  attr_reader wrapper: Enumerable[untyped]
+
+  def initialize: (*Integer, ?total: Integer?, ?wrapper: wrapper) -> void
   def merge: (*Enumerable[untyped]) -> Array[untyped]
 
   private
 
   def generate_pattern_counts: (Integer) -> Array[Integer]
+  def slice_collections: (collections) -> Array[Array[untyped]]
+  def merge_collections_into_wrapper: (Array[Array[untyped]], wrapper: wrapper, total: Integer) -> wrapper
   def validate_pattern: () -> void
   def validate_total: () -> void
-  def validate_merge_collections: (*Enumerable[untyped]) -> void
+  def validate_merge_collections: (collections) -> void
+  def validate_wrapper: (?wrapper) -> void
 end
