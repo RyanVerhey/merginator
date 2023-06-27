@@ -7,7 +7,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'Steepfile'
-    - 'vendor/'
+    - 'vendor/*'
 
 Style/StringLiterals:
   Enabled: true
