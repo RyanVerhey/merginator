@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class TestPatternMerge < Minitest::Test
+  class KindOfArray < Array; end
+
   class Initialize < TestPatternMerge
     def test_more_than_one_pattern_required
       error = assert_raises ArgumentError do
@@ -46,29 +48,43 @@ class TestPatternMerge < Minitest::Test
       yes_counts = Merginator::PatternMerge.new(1, 2, total: 10)
       assert yes_counts.counts
     end
+
+    def test_wrapper_is_optional
+      # assert_nothing_raised
+      Merginator::PatternMerge.new(1, 2)
+
+      # assert_nothing_raised
+      Merginator::PatternMerge.new(1, 2, wrapper: [])
+    end
+
+    def test_wrapper_must_be_array
+      # assert_nothing_raised
+      Merginator::PatternMerge.new(1, 2, wrapper: KindOfArray.new)
+
+      # assert_nothing_raised
+      Merginator::PatternMerge.new(1, 2, wrapper: [])
+
+      error = assert_raises ArgumentError do
+        Merginator::PatternMerge.new(1, 2, wrapper: '')
+      end
+
+      expected_message = 'wrapper must be like an array'
+      assert_equal expected_message, error.message
+    end
   end
 
   class Counts < TestPatternMerge
     def test_generates_pattern_counts_properly
-      mergifier = Merginator::PatternMerge.new(5, 2, 3, total: 21)
-      expected = [11, 4, 6]
+      tests = [
+        [[11, 4, 6], Merginator::PatternMerge.new(5, 2, 3, total: 21)],
+        [[6, 20, 4], Merginator::PatternMerge.new(3, 10, 3, total: 30)],
+        [[5, 10, 15], Merginator::PatternMerge.new(1, 2, 3, total: 30)],
+        [[200, 70, 30], Merginator::PatternMerge.new(50, 20, 10, total: 300)]
+      ]
 
-      assert_equal expected, mergifier.counts
-
-      mergifier = Merginator::PatternMerge.new(3, 10, 3, total: 30)
-      expected = [6, 20, 4]
-
-      assert_equal expected, mergifier.counts
-
-      mergifier = Merginator::PatternMerge.new(1, 2, 3, total: 30)
-      expected = [5, 10, 15]
-
-      assert_equal expected, mergifier.counts
-
-      mergifier = Merginator::PatternMerge.new(50, 20, 10, total: 300)
-      expected = [200, 70, 30]
-
-      assert_equal expected, mergifier.counts
+      tests.each do |expected, mergifier|
+        assert_equal expected, mergifier.counts
+      end
     end
   end
 
@@ -99,7 +115,8 @@ class TestPatternMerge < Minitest::Test
         @mergifier.merge(*collections)
       end
 
-      expected_message = 'total number of elements in collections must be >= provided total; expected 21 elements, actual: 3'
+      expected_message = 'total number of elements in collections must be >= '
+      expected_message += 'provided total; expected 21 elements, actual: 3'
       assert_equal expected_message, error.message
     end
 
@@ -154,7 +171,8 @@ class TestPatternMerge < Minitest::Test
         Array.new(20, 'Two'),
         Array.new(20, 'Three')
       ]
-      expected = %w[One One One One One Two Two Three Three Three Two Two Three Three Three Two Two Three Three Three Two]
+      expected = %w[One One One One One Two Two Three Three Three Two Two Three]
+      expected += %w[Three Three Two Two Three Three Three Two]
 
       assert_equal expected, @mergifier.merge(*collections)
     end
@@ -168,6 +186,36 @@ class TestPatternMerge < Minitest::Test
       expected = %w[One One One One One Two Two Three Three Three One One One One One Two One One One One One]
 
       assert_equal expected, @mergifier.merge(*collections)
+    end
+
+    def test_wraps_elements_in_wrapper
+      collections = [
+        Array.new(20, 'One'),
+        Array.new(20, 'Two'),
+        Array.new(20, 'Three')
+      ]
+      wrapper = KindOfArray.new
+      mergifier = Merginator::PatternMerge.new(5, 2, 3, wrapper: wrapper)
+      result = mergifier.merge(*collections)
+
+      assert_equal wrapper.object_id, result.object_id
+    end
+
+    def test_can_ignore_total_and_merge_all
+      collections = [
+        Array.new(20, 'One'),
+        Array.new(20, 'Two'),
+        Array.new(20, 'Three')
+      ]
+      total = 10
+      collections_total = collections.flatten.count
+      assert collections_total > total
+
+      mergifier = Merginator::PatternMerge.new(5, 2, 3, total: total)
+      result = mergifier.merge(*collections, ignore_total: true)
+
+      assert result.count > total
+      assert_equal collections_total, result.count
     end
   end
 end

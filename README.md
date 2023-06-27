@@ -1,4 +1,4 @@
-# Merginator
+# Merginator [![Gem Version](https://badge.fury.io/rb/merginator.svg)](https://badge.fury.io/rb/merginator) ![Build Status](https://github.com/RyanVerhey/merginator/actions/workflows/main.yml/badge.svg?branch=main)
 
 Easily merge collections with a simple API!
 
@@ -6,11 +6,11 @@ Easily merge collections with a simple API!
 
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add Merginator
+    $ bundle add merginator
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install Merginator
+    $ gem install merginator
 
 ## Usage
 

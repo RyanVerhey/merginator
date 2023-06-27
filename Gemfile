@@ -8,8 +8,8 @@ gemspec
 gem 'rake'
 
 gem 'minitest'
-
-gem 'rubocop'
+gem 'rubocop', require: false
 gem 'rubocop-minitest', require: false
 gem 'rubocop-rake', require: false
-gem 'rbs', require: false
+gem 'simplecov', require: false
+gem 'steep', require: false

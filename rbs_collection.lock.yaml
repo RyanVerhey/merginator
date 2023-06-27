@@ -1,0 +1,18 @@
+---
+sources:
+- type: git
+  name: ruby/gem_rbs_collection
+  revision: 87fba082504c606c03edf724cdf2e119bcd46c8c
+  remote: https://github.com/ruby/gem_rbs_collection.git
+  repo_dir: gems
+path: ".gem_rbs_collection"
+gems:
+- name: minitest
+  version: '0'
+  source:
+    type: stdlib
+- name: mutex_m
+  version: '0'
+  source:
+    type: stdlib
+gemfile_lock_path: Gemfile.lock
