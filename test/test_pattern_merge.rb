@@ -217,5 +217,22 @@ class TestPatternMerge < Minitest::Test
       assert result.count > total
       assert_equal collections_total, result.count
     end
+
+    def test_ignoring_total_also_disables_num_of_elements_validation
+      collections = [
+        Array.new(3, 'One'),
+        Array.new(3, 'Two'),
+        Array.new(3, 'Three')
+      ]
+      total = 10
+      collections_total = collections.sum(&:size)
+      assert collections_total < total
+
+      mergifier = Merginator::PatternMerge.new(5, 2, 3, total: total)
+      result = mergifier.merge(*collections, ignore_total: true)
+
+      assert result.count < total
+      assert_equal collections_total, result.count
+    end
   end
 end

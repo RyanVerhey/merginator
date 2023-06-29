@@ -25,11 +25,10 @@ module Merginator
     end
 
     def merge(*collections, wrapper: @wrapper, ignore_total: false)
-      validate_merge_collections(collections)
+      validate_merge_collections(collections, ignore_total: ignore_total)
       validate_wrapper wrapper
 
-      total_to_use = @total
-      total_to_use = collections.sum(&:size) if !total || ignore_total
+      total_to_use = total_to_use(collections, ignore_total: ignore_total)
 
       slices_for_collections = slice_collections(collections)
       merge_collections_into_wrapper(slices_for_collections, wrapper: wrapper, total: total_to_use)
@@ -75,6 +74,10 @@ module Merginator
       wrapper.replace wrapper.take(total)
     end
 
+    def total_to_use(collections, ignore_total: false)
+      !@total || ignore_total ? collections.sum(&:size) : @total.to_i
+    end
+
     def validate_pattern
       raise ArgumentError, 'there must be more than one collection in the pattern' if @pattern.count <= 1
       raise ArgumentError, 'pattern must be all integers' unless @pattern.all? { |n| n.is_a? Integer }
@@ -86,15 +89,15 @@ module Merginator
       raise ArgumentError, 'total must be at least 1'
     end
 
-    def validate_merge_collections(collections)
+    def validate_merge_collections(collections, ignore_total: false)
       unless @pattern.count == collections.count
         message = 'number of collections must match pattern; '
         message += "expected #{@pattern.count} collections, actual: #{collections.count}"
         raise ArgumentError, message
       end
 
-      total_to_use = @total || collections.flatten.count
-      return if collections.flatten.count >= total_to_use
+      total_to_use = total_to_use(collections, ignore_total: ignore_total)
+      return if collections.sum(&:size) >= total_to_use
 
       message = 'total number of elements in collections must be >= provided total; '
       message += "expected #{@total} elements, actual: #{collections.flatten.count}"
