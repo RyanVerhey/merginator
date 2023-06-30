@@ -234,5 +234,26 @@ class TestPatternMerge < Minitest::Test
       assert result.count < total
       assert_equal collections_total, result.count
     end
+
+    def test_does_not_completely_flatten_array_of_arrays
+      collections = [
+        Array.new(3, %w[One One]),
+        Array.new(3, %w[Two Two]),
+        Array.new(3, %w[Three Three])
+      ]
+      mergifier = Merginator::PatternMerge.new(1, 1, 1, total: 7)
+      expected = [
+        %w[One One],
+        %w[Two Two],
+        %w[Three Three],
+        %w[One One],
+        %w[Two Two],
+        %w[Three Three],
+        %w[One One]
+      ]
+
+      result = mergifier.merge(*collections)
+      assert_equal expected, result
+    end
   end
 end
