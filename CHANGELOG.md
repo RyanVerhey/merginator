@@ -1,3 +1,7 @@
+## [0.2.3] - 2023-06-30
+
+- Fixing issue where array of arrays would be flattened completely unexpectedly
+
 ## [0.2.2] - 2023-06-30
 
 - Updating ignore total behavior to actually ignore total when validating

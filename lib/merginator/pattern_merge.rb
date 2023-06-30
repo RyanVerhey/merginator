@@ -67,7 +67,7 @@ module Merginator
 
     def merge_collections_into_wrapper(slices_for_collections, wrapper:, total:)
       slices_for_collections.map(&:size).max.to_i.times.each_with_object(wrapper) do |index, wrapper_obj|
-        wrapper_obj.concat slices_for_collections.map { |slices| slices[index] || [] }.flatten
+        wrapper_obj.concat(slices_for_collections.map { |slices| slices[index] || [] }.flatten(1))
         break(wrapper_obj) if wrapper_obj.size >= total
       end
 
