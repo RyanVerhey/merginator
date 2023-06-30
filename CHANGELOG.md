@@ -1,3 +1,7 @@
+## [0.2.2] - 2023-06-30
+
+- Updating ignore total behavior to actually ignore total when validating
+
 ## [0.2.1] - 2023-06-27
 
 - Configuration change version bump

@@ -17,8 +17,9 @@ class Merginator::PatternMerge
   def generate_pattern_counts: (total) -> Array[Integer]?
   def slice_collections: (Array[collection]) -> Array[Array[untyped]]
   def merge_collections_into_wrapper: (Array[Array[untyped]], wrapper: wrapper, total: Integer) -> wrapper
+  def total_to_use: (Array[collection], ?ignore_total: bool) -> Integer
   def validate_pattern: () -> void
   def validate_total: () -> void
-  def validate_merge_collections: (Array[collection]) -> void
+  def validate_merge_collections: (Array[collection], ?ignore_total: bool) -> void
   def validate_wrapper: (?wrapper) -> void
 end
