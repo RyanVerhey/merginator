@@ -16,11 +16,9 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
-    - name: Install dependencies
-      run: bundle install
+    - name: Setup App
+      run: bin/setup
     - name: Audit
       run: bundle exec bundle-audit check --update
-    - name: Install RBS collections
-      run: bundle exec rbs collection install
     - name: Run tests, rubocop, and RBS
       run: bundle exec rake
