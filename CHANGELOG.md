@@ -1,3 +1,10 @@
+## [0.2.3.1] - 2024-03-12
+
+- Dependency updates
+- GitHub actions updates
+- Testing on more Ruby versions
+- Development (RBS, Steep) configuration
+
 ## [0.2.3] - 2023-06-30
 
 - Fixing issue where array of arrays would be flattened completely unexpectedly
