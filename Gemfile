@@ -7,9 +7,15 @@ gemspec
 
 gem 'rake'
 
-gem 'minitest'
-gem 'rubocop', require: false
-gem 'rubocop-minitest', require: false
-gem 'rubocop-rake', require: false
-gem 'simplecov', require: false
-gem 'steep', require: false
+group :development do
+  gem 'bundler-audit'
+  gem 'rubocop-minitest'
+  gem 'rubocop-rake'
+  gem 'rubocop'
+  gem 'simplecov'
+  gem 'steep'
+end
+
+group :test do
+  gem 'minitest'
+end

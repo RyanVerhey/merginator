@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    merginator (0.2.3)
+    merginator (0.2.3.1)
 
 GEM
   remote: https://rubygems.org/
@@ -13,6 +13,9 @@ GEM
       tzinfo (~> 2.0)
     ast (2.4.2)
     base64 (0.1.1)
+    bundler-audit (0.9.1)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 1.0)
     concurrent-ruby (1.2.2)
     csv (3.2.7)
     docile (1.4.0)
@@ -84,6 +87,7 @@ GEM
     strscan (3.0.6)
     terminal-table (3.0.2)
       unicode-display_width (>= 1.1.1, < 3)
+    thor (1.3.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
@@ -92,6 +96,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler-audit
   merginator!
   minitest
   rake
