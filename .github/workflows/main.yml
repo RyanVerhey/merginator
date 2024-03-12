@@ -18,6 +18,8 @@ jobs:
         bundler-cache: true
     - name: Install dependencies
       run: bundle install
+    - name: Audit
+      run: bundle exec bundle-audit check --update
     - name: Install RBS collections
       run: bundle exec rbs collection install
     - name: Run tests, rubocop, and RBS
