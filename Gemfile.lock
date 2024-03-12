@@ -100,6 +100,7 @@ DEPENDENCIES
   merginator!
   minitest
   rake
+  rbs
   rubocop
   rubocop-minitest
   rubocop-rake

@@ -9,9 +9,10 @@ gem 'rake'
 
 group :development do
   gem 'bundler-audit'
+  gem 'rbs'
+  gem 'rubocop'
   gem 'rubocop-minitest'
   gem 'rubocop-rake'
-  gem 'rubocop'
   gem 'simplecov'
   gem 'steep'
 end
