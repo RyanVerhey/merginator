@@ -1,18 +1,16 @@
 ---
-sources:
-- type: git
-  name: ruby/gem_rbs_collection
-  revision: 87fba082504c606c03edf724cdf2e119bcd46c8c
-  remote: https://github.com/ruby/gem_rbs_collection.git
-  repo_dir: gems
 path: ".gem_rbs_collection"
 gems:
-- name: minitest
+- name: fileutils
   version: '0'
   source:
     type: stdlib
-- name: mutex_m
-  version: '0'
+- name: rake
+  version: '13.0'
   source:
-    type: stdlib
+    type: git
+    name: ruby/gem_rbs_collection
+    revision: 372c833bb52be1bc34aef5e2793ab47c35c0dba9
+    remote: https://github.com/ruby/gem_rbs_collection.git
+    repo_dir: gems
 gemfile_lock_path: Gemfile.lock
