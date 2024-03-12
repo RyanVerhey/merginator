@@ -8,15 +8,18 @@ gemspec
 gem 'rake'
 
 group :development do
-  gem 'bundler-audit'
-  gem 'rbs'
-  gem 'rubocop'
-  gem 'rubocop-minitest'
-  gem 'rubocop-rake'
-  gem 'simplecov'
-  gem 'steep'
+  gem 'bundler-audit', require: false
+  gem 'rubocop', require: false
+  gem 'rubocop-minitest', require: false
+  gem 'rubocop-rake', require: false
 end
 
 group :test do
-  gem 'minitest'
+  gem 'minitest', require: false
+  gem 'simplecov', require: false
+end
+
+group :development, :test do
+  gem 'rbs', require: false
+  gem 'steep', require: false
 end
