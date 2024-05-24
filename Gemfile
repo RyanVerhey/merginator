@@ -21,5 +21,5 @@ end
 
 group :development, :test do
   gem 'rbs', '~> 3.4', require: false
-  gem 'steep', '~> 1.5', '>= 1.5.3', require: false
+  gem 'steep', '~> 1.6', require: false
 end
