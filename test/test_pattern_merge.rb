@@ -97,7 +97,7 @@ class TestPatternMerge < Minitest::Test
 
     def test_number_of_collections_must_match_pattern_length
       collections = [[1], [2]]
-      refute collections.count == @mergifier.pattern.count
+      refute_equal collections.count, @mergifier.pattern.count
 
       error = assert_raises ArgumentError do
         @mergifier.merge(*collections)
@@ -109,7 +109,7 @@ class TestPatternMerge < Minitest::Test
 
     def test_number_of_elements_must_be_gte_total
       collections = [[1], [2], [3]]
-      refute collections.flatten.count >= @mergifier.total
+      refute_operator collections.flatten.count, :>=, @mergifier.total
 
       error = assert_raises ArgumentError do
         @mergifier.merge(*collections)
@@ -198,7 +198,7 @@ class TestPatternMerge < Minitest::Test
       mergifier = Merginator::PatternMerge.new(5, 2, 3, wrapper: wrapper)
       result = mergifier.merge(*collections)
 
-      assert_equal wrapper.object_id, result.object_id
+      assert_same wrapper, result
     end
 
     def test_can_ignore_total_and_merge_all
@@ -209,12 +209,12 @@ class TestPatternMerge < Minitest::Test
       ]
       total = 10
       collections_total = collections.flatten.count
-      assert collections_total > total
+      assert_operator collections_total, :>, total
 
       mergifier = Merginator::PatternMerge.new(5, 2, 3, total: total)
       result = mergifier.merge(*collections, ignore_total: true)
 
-      assert result.count > total
+      assert_operator result.count, :>, total
       assert_equal collections_total, result.count
     end
 
@@ -226,12 +226,12 @@ class TestPatternMerge < Minitest::Test
       ]
       total = 10
       collections_total = collections.sum(&:size)
-      assert collections_total < total
+      assert_operator collections_total, :<, total
 
       mergifier = Merginator::PatternMerge.new(5, 2, 3, total: total)
       result = mergifier.merge(*collections, ignore_total: true)
 
-      assert result.count < total
+      assert_operator result.count, :<, total
       assert_equal collections_total, result.count
     end
 
