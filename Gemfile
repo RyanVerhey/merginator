@@ -17,6 +17,6 @@ end
 
 group :development, :test do
   gem 'bundler-audit', require: false
-  gem 'rbs', '~> 3.4', require: false
-  gem 'steep', '~> 1.6', require: false
+  gem 'rbs', '~> 3.1', require: false
+  gem 'steep', '~> 1.5', require: false
 end
