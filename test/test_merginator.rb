@@ -13,7 +13,7 @@ class TestMerginator < Minitest::Test
     def test_returns_an_instance_of_pattern_merge
       result = ::Merginator.pattern_merge(4, 2, 1, total: 25)
 
-      assert result.is_a?(::Merginator::PatternMerge)
+      assert_kind_of ::Merginator::PatternMerge, result
       assert_equal [4, 2, 1], result.pattern
       assert_equal 25, result.total
     end
