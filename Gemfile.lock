@@ -79,7 +79,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    steep (1.5.3)
+    steep (1.6.0)
       activesupport (>= 5.1)
       concurrent-ruby (>= 1.1.10)
       csv (>= 3.0.9)
@@ -115,7 +115,7 @@ DEPENDENCIES
   rubocop-minitest
   rubocop-rake
   simplecov
-  steep (~> 1.5)
+  steep (~> 1.6)
 
 BUNDLED WITH
    2.4.22
