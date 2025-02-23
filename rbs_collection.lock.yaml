@@ -2,7 +2,7 @@
 sources:
 - type: git
   name: ruby/gem_rbs_collection
-  revision: 438153d157e1e1ed6b640da973e33f333e57e6d9
+  revision: 03cd23e80bc6ca7f6fa2a21da23ceeec00fa920f
   remote: https://github.com/ruby/gem_rbs_collection.git
   repo_dir: gems
 path: ".gem_rbs_collection"
@@ -16,7 +16,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: 438153d157e1e1ed6b640da973e33f333e57e6d9
+    revision: 03cd23e80bc6ca7f6fa2a21da23ceeec00fa920f
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 gemfile_lock_path: Gemfile.lock
