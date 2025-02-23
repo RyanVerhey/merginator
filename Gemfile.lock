@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    merginator (0.2.3.2)
+    merginator (0.2.3.3)
 
 GEM
   remote: https://rubygems.org/
